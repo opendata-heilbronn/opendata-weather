@@ -792,6 +792,9 @@
             overlay.setUrl("lastdays/" + newFile);
             setTimeout(loadNextImage, 100)
         };
+        downloadingImage.onerror = function() {
+            setTimeout(loadNextImage, 100)
+        }        
     }
 
     setTimeout(loadNextImage, 100);
