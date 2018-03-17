@@ -41,8 +41,8 @@
     const dateFilePattern = /rainradar_(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\d\d.*/;
 
     var imageBounds = L.latLngBounds([
-            [46.95257828070096, 3.5889323545584633],
-            [54.74054512217148, 15.72075796095801]]);
+        [46.95257828070096, 3.5889323545584633],
+        [54.74054512217148, 15.72075796095801]]);
 
     var map = L.mapbox.map('map', 'mapbox.streets')
         .fitBounds(imageBounds);
@@ -54,9 +54,11 @@
         let waitTime = 100;
         if (counter > files.length - 1) {
             counter = 0;
-            waitTime = 4000;
         }
         const newFile = files[counter++];
+        if (counter > files.length - 1) {
+            waitTime = 4000;
+        }
 
         const downloadingImage = new Image();
         downloadingImage.src = "https://grundid.de/data/weather/" + newFile;
@@ -73,12 +75,12 @@
         }
     }
 
-    fetch('https://grundid.de/data/weather/files.json?time='+Date.now())
-        .then(function(response) {
+    fetch('https://grundid.de/data/weather/files.json?time=' + Date.now())
+        .then(function (response) {
             console.log(response);
             return response.json();
         })
-        .then(function(myJson) {
+        .then(function (myJson) {
             files.push(...myJson);
             setTimeout(loadNextImage, 100);
         });
