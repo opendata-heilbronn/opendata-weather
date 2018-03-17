@@ -6,7 +6,3 @@ if (process.argv.length === 4) {
 } else {
     console.log("USAGE: node listFiles.js <dir> <output>")
 }
-
-
-
-
