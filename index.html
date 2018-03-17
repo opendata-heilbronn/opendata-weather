@@ -51,8 +51,10 @@
 
 
     function loadNextImage() {
+        let waitTime = 100;
         if (counter > files.length - 1) {
             counter = 0;
+            waitTime = 4000;
         }
         const newFile = files[counter++];
 
@@ -64,10 +66,10 @@
                 dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
             }
             overlay.setUrl("https://grundid.de/data/weather/" + newFile);
-            setTimeout(loadNextImage, 100);
+            setTimeout(loadNextImage, waitTime);
         };
         downloadingImage.onerror = function () {
-            setTimeout(loadNextImage, 100);
+            setTimeout(loadNextImage, 0);
         }
     }
 
