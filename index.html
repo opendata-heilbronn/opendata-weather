@@ -17,11 +17,11 @@
             z-index: 10;
             height: 18px;
             background-color: white;
-            left:0;
+            left: 0;
             right: 0;
             text-align: center;
         }
-        
+
         #map {
             position: absolute;
             top: 0;
@@ -775,7 +775,7 @@
 
     const dateFilePattern = /rainradar_(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\d\d.*/;
 
-    
+
     function loadNextImage() {
         if (counter > files.length - 1) {
             counter = 0;
@@ -783,8 +783,8 @@
         const newFile = files[++counter];
 
         const downloadingImage = new Image();
-        downloadingImage.src = newFile;
-        downloadingImage.onload = function(){
+        downloadingImage.src = "lastdays/" + newFile;
+        downloadingImage.onload = function () {
             const matches = dateFilePattern.exec(newFile);
             if (matches) {
                 dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
@@ -792,13 +792,13 @@
             overlay.setUrl("lastdays/" + newFile);
             setTimeout(loadNextImage, 100)
         };
-        downloadingImage.onerror = function() {
+        downloadingImage.onerror = function () {
             setTimeout(loadNextImage, 100)
-        }        
+        }
     }
 
     setTimeout(loadNextImage, 100);
-    
+
 </script>
 </body>
 </html>
