@@ -764,6 +764,9 @@
 
     var map = L.mapbox.map('map', 'mapbox.streets')
         .fitBounds(imageBounds);
+    map.on("layeradd", (event) => {
+        console.log("event:", event);
+    });
 
     // See full documentation for the ImageOverlay type:
     // http://leafletjs.com/reference.html#imageoverlay
@@ -772,21 +775,27 @@
 
     const dateFilePattern = /rainradar_(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\d\d.*/;
 
-
-    const handler = setInterval(() => {
+    
+    function loadNextImage() {
         if (counter > files.length - 1) {
             counter = 0;
         }
         const newFile = files[++counter];
 
-        const matches = dateFilePattern.exec(newFile);
-        if (matches) {
-            dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
-        }
-        overlay.setUrl("lastdays/" + newFile);
+        const downloadingImage = new Image();
+        downloadingImage.src = newFile;
+        downloadingImage.onload = function(){
+            const matches = dateFilePattern.exec(newFile);
+            if (matches) {
+                dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
+            }
+            overlay.setUrl("lastdays/" + newFile);
+            setTimeout(loadNextImage, 100)
+        };
+    }
 
-    }, 100);
-
+    setTimeout(loadNextImage, 100);
+    
 </script>
 </body>
 </html>
