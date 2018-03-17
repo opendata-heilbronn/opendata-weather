@@ -46,7 +46,7 @@
 
     var map = L.mapbox.map('map', 'mapbox.streets')
         .fitBounds(imageBounds);
-    var overlay = L.imageOverlay("http://grundid.de/data/weather/rainradar_20180315_000001.png", imageBounds)
+    var overlay = L.imageOverlay("https://grundid.de/data/weather/rainradar_20180315_000001.png", imageBounds)
         .addTo(map);
 
 
@@ -57,13 +57,13 @@
         const newFile = files[counter++];
 
         const downloadingImage = new Image();
-        downloadingImage.src = "http://grundid.de/data/weather/" + newFile;
+        downloadingImage.src = "https://grundid.de/data/weather/" + newFile;
         downloadingImage.onload = function () {
             const matches = dateFilePattern.exec(newFile);
             if (matches) {
                 dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
             }
-            overlay.setUrl("http://grundid.de/data/weather/" + newFile);
+            overlay.setUrl("https://grundid.de/data/weather/" + newFile);
             setTimeout(loadNextImage, 100);
         };
         downloadingImage.onerror = function () {
@@ -71,7 +71,7 @@
         }
     }
 
-    fetch('http://grundid.de/data/weather/files.json?time='+Date.now())
+    fetch('https://grundid.de/data/weather/files.json?time='+Date.now())
         .then(function(response) {
             console.log(response);
             return response.json();
