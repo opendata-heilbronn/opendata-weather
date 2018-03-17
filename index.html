@@ -76,18 +76,21 @@
     }
 
     function fetchNewData() {
-        fetch('https://grundid.de/data/weather/files.json?time=' + Date.now())
+        return fetch('https://grundid.de/data/weather/files.json?time=' + Date.now())
             .then(function (response) {
                 console.log(response);
                 return response.json();
             })
             .then(function (myJson) {
                 files.splice(0, files.length, ...myJson);
-                setTimeout(loadNextImage, 100);
+                return true;
             });
     }
+
     setInterval(fetchNewData, 5 * 60 * 1000);
-    fetchNewData();
+    fetchNewData().then(() => {
+        setTimeout(loadNextImage, 100);
+    });
 </script>
 </body>
 </html>
