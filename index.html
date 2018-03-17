@@ -12,6 +12,16 @@
             padding: 0;
         }
 
+        #date {
+            position: absolute;
+            z-index: 10;
+            height: 18px;
+            background-color: white;
+            left:0;
+            right: 0;
+            text-align: center;
+        }
+        
         #map {
             position: absolute;
             top: 0;
@@ -22,6 +32,7 @@
 </head>
 <body>
 <div id='map'></div>
+<div id="date"><span id="dateText"></span></div>
 <script>
     const files = [
         "rainradar_20180315_000001.png",
@@ -738,6 +749,7 @@
         "rainradar_20180317_111501.png"
     ];
 
+    const dateOutput = document.getElementById("dateText");
 
     L.mapbox.accessToken = 'pk.eyJ1Ijoibml0ZWdhdGUiLCJhIjoiY2l4ejFxc2d6MDA1aDJxbzc5bjZrMzI0ZyJ9.EEPEOLNhdFz9DVNx4TCvBw';
     let counter = 0;
@@ -758,11 +770,20 @@
     var overlay = L.imageOverlay(imageUrl, imageBounds)
         .addTo(map);
 
+    const dateFilePattern = /rainradar_(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\d\d.*/;
+
+
     const handler = setInterval(() => {
         if (counter > files.length - 1) {
             counter = 0;
         }
-        overlay.setUrl("lastdays/" + files[++counter]);
+        const newFile = files[++counter];
+
+        const matches = dateFilePattern.exec(newFile);
+        if (matches) {
+            dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
+        }
+        overlay.setUrl("lastdays/" + newFile);
 
     }, 100);
 
