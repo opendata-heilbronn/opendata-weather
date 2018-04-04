@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset=utf-8/>
-    <title>Regenradar Deutschland - kostenlos und ohne Werbung</title>
+    <title>DWD Regenradar - kostenlos und ohne Werbung</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
     <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet'/>
@@ -76,7 +76,7 @@
     }
 
     function fetchNewData() {
-        return fetch('https://grundid.de/data/weather/files.json?time=' + Date.now())
+        return fetch('https://grundid.de/data/weather/files4.json?time=' + Date.now())
             .then(function (response) {
                 console.log(response);
                 return response.json();
