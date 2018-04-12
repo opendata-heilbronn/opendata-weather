@@ -1,96 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
+
+  <head>
     <meta charset=utf-8/>
     <title>DWD Regenradar - kostenlos und ohne Werbung</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
-    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet'/>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
+  </head>
 
-        #date {
-            position: absolute;
-            z-index: 10;
-            height: 18px;
-            background-color: white;
-            left: 0;
-            right: 0;
-            text-align: center;
-        }
+  <body>
+    <div id='map'></div>
+    <div class='map-overlay'>
+      <div class='map-overlay-inner'>
+        <h2>Zeitraum <span id='sliderVal'>4</span> h</h2>
+        <input id='slider' type='range' min='4' max='48' value='4' />
+      </div>
+    </div>
+  </body>
 
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
-</head>
-<body>
-<div id='map'></div>
-<div id="date"><span id="dateText"></span></div>
-<script>
-    const files = [];
-    const dateOutput = document.getElementById("dateText");
-    L.mapbox.accessToken = 'pk.eyJ1Ijoibml0ZWdhdGUiLCJhIjoiY2l4ejFxc2d6MDA1aDJxbzc5bjZrMzI0ZyJ9.EEPEOLNhdFz9DVNx4TCvBw';
-    let counter = 0;
-    const dateFilePattern = /rainradar_(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\d\d.*/;
-
-    var imageBounds = L.latLngBounds([
-        [46.95257828070096, 3.5889323545584633],
-        [54.74054512217148, 15.72075796095801]]);
-
-    var map = L.mapbox.map('map', 'mapbox.streets')
-        .fitBounds(imageBounds);
-    var overlay = L.imageOverlay("https://grundid.de/data/weather/rainradar_20180315_000001.png", imageBounds)
-        .addTo(map);
-
-
-    function loadNextImage() {
-        let waitTime = 100;
-        if (counter > files.length - 1) {
-            counter = 0;
-        }
-        const newFile = files[counter++];
-        if (counter > files.length - 1) {
-            waitTime = 4000;
-        }
-
-        const downloadingImage = new Image();
-        downloadingImage.src = "https://grundid.de/data/weather/" + newFile;
-        downloadingImage.onload = function () {
-            const matches = dateFilePattern.exec(newFile);
-            if (matches) {
-                dateOutput.innerHTML = matches[4] + ":" + matches[5] + " - " + matches[3] + "." + matches[2] + "." + matches[1];
-            }
-            overlay.setUrl("https://grundid.de/data/weather/" + newFile);
-            setTimeout(loadNextImage, waitTime);
-        };
-        downloadingImage.onerror = function () {
-            setTimeout(loadNextImage, 0);
-        }
-    }
-
-    function fetchNewData() {
-        return fetch('https://grundid.de/data/weather/files4.json?time=' + Date.now())
-            .then(function (response) {
-                console.log(response);
-                return response.json();
-            })
-            .then(function (myJson) {
-                files.splice(0, files.length, ...myJson);
-                return true;
-            });
-    }
-
-    setInterval(fetchNewData, 5 * 60 * 1000);
-    fetchNewData().then(() => {
-        setTimeout(loadNextImage, 100);
-    });
-</script>
-</body>
 </html>
