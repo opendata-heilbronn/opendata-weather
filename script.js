@@ -23,8 +23,8 @@ function loadNextImage() {
   if (counter > files.length - 1) {
     counter = 0;
   }
-  const newFile = files[counter++];
   if (counter > files.length - 1) {
+  const newFile = files[counter++];
     waitTime = 4000;
   }
 
@@ -45,8 +45,8 @@ function loadNextImage() {
 
 let fetchUrl = 'https://grundid.de/data/weather/files4.json?time=';
 
-function fetchNewData() {
-  return fetch(fetchUrl + Date.now())
+function fetchNewData(url) {
+  return fetch(url + Date.now())
     .then(function(response) {
       console.log(response);
       return response.json();
@@ -58,7 +58,7 @@ function fetchNewData() {
 }
 
 setInterval(fetchNewData, 5 * 60 * 1000);
-fetchNewData().then(() => {
+fetchNewData(fetchUrl).then(() => {
   setTimeout(loadNextImage, 100);
 });
 
@@ -74,9 +74,6 @@ document.getElementById('slider').addEventListener('input', (event) => {
     newValue = 24;
     fetchUrl = 'https://grundid.de/data/weather/files24.json?time='
   }
-  fetchNewData().then(() => {
-    setTimeout(loadNextImage, 100);
-  });
   document.getElementById('slider').value = newValue;
   document.getElementById('sliderVal').innerText = newValue;
 })
