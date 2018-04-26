@@ -3,7 +3,7 @@ const dateOutput = document.getElementById("dateText");
 mapboxgl.accessToken = 'pk.eyJ1Ijoibml0ZWdhdGUiLCJhIjoiY2l4ejFxc2d6MDA1aDJxbzc5bjZrMzI0ZyJ9.EEPEOLNhdFz9DVNx4TCvBw';
 let counter = 0;
 const dateFilePattern = /rainradar_(\d\d\d\d)(\d\d)(\d\d)_(\d\d)(\d\d)\d\d.*/;
-
+let totalImages = 0;
 let selectedHours = 4;
 /*let imageBounds = L.latLngBounds([
     [46.95257828070096, 3.5889323545584633],
@@ -25,6 +25,7 @@ map.fitBounds(imageBounds);
 map.on("load", function () {
     console.log("map loaded");
     fetchNewData(fetchUrl).then((files) => {
+        totalImages = files.length;
         const imageStatus = document.getElementById('imageStatus');
         files.forEach((file) => {
             const statusDiv = document.createElement("div");
@@ -75,7 +76,7 @@ function preloadImages(files, index) {
                 },
                 type: 'raster',
                 paint: {
-                    'raster-opacity': 1,
+                    'raster-opacity': 0,
                     'raster-opacity-transition': {
                         duration: 0
                     }
@@ -88,6 +89,13 @@ function preloadImages(files, index) {
         downloadingImage.onerror = function () {
             preloadImages(files, ++index);
         }
+    } else {
+        var frame = totalImages - 1;
+        setInterval(function() {
+            map.setPaintProperty('radar' + frame, 'raster-opacity', 0);
+            frame = (frame + 1) % totalImages;
+            map.setPaintProperty('radar' + frame, 'raster-opacity', 1);
+        }, 200);
     }
 }
 
