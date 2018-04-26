@@ -1,56 +1,68 @@
 body {
     margin: 0;
     padding: 0;
-  }
+}
 
-  #date {
+#date {
     background-color: white;
     justify-content: center;
     text-align: center;
-  }
+}
 
-  #map {
+#map {
     position: absolute;
-    top: 0;
+    top: 48px;
     bottom: 0;
     width: 100%;
-  }
+}
 
-  #buttons {
+#buttons {
     background-color: none;
     left: 0;
     right: 0;
     text-align: left;
-  }
+}
 
-  .map-overlay {
+.map-overlay {
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
     position: absolute;
-    width: 25%;
-    top: 0;
+    bottom: 0;
     left: 0;
+    right: 0;
     padding: 10px;
-  }
+}
 
-  .map-overlay .map-overlay-inner {
+.map-overlay .map-overlay-inner {
     background-color: #fff;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.20);
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 10px;
-  }
+}
 
-  .map-overlay h2 {
+.map-overlay h2 {
     line-height: 24px;
     display: block;
     margin: 0 0 10px;
-  }
+}
 
-  .map-overlay input {
+.map-overlay input {
     background-color: transparent;
     display: inline-block;
     width: 100%;
     position: relative;
     margin: 0;
     cursor: ew-resize;
-  }
+}
+
+.image-holder {
+    flex-grow: 1;
+    background-color: azure;
+    min-width: 2px;
+    height: 16px;
+    margin-left: 1px;
+}
+
+.image-loaded {
+    background-color: cornflowerblue !important;
+}

@@ -5,18 +5,27 @@
     <meta charset=utf-8/>
     <title>DWD Regenradar - kostenlos und ohne Werbung</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js'></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
     <script defer src="script.js"></script>
     <link rel="stylesheet" href="style.css">
-    <link href='https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css' rel='stylesheet' />
   </head>
 
   <body>
+    <header>
+        <h3>Regenradar</h3>
+    </header>
     <div id='map'></div>
     <div class='map-overlay'>
-      <div class='map-overlay-inner'>
-        <h2>Zeitraum <span id='sliderVal'>4</span> h</h2>
-        <input id='slider' type='range' min='4' max='48' value='4' />
+      <div style="height: 16px;" class='map-overlay-inner'>
+        <div style="position: absolute;z-index: 10; left: 16px; right: 16px">
+          <input id='slider' type='range' min='0' max='21' value='0' />  
+        </div>
+        <div id="imageStatus" style="position: absolute;z-index: 1; display: flex; left: 16px; right: 16px">
+          
+        </div>
+        
+        
       </div>
     </div>
   </body>
