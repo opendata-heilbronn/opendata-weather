@@ -99,7 +99,7 @@ function preloadImages(files, index) {
     }
 }
 
-let fetchUrl = 'https://grundid.de/data/weather/files4.json?time=';
+let fetchUrl = 'https://grundid.de/data/weather/files24.json?time=';
 
 function fetchNewData(url) {
     return fetch(url + Date.now())

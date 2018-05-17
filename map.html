@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Regenradar</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    const widthStart = 130;
+    const widthEnd = 140;
+    const heightStart = 80;
+    const heightEnd = 91;
+
+    const mapElement = document.getElementById("map");
+
+    for (let width = widthStart; width <= widthEnd; width++) {
+        for (let height = heightStart; height <= heightEnd; height++) {
+            const imageName = "tile_" + width + "_" + height + ".png";
+            console.log(imageName);
+
+            const posY = (height - heightStart) * 256;
+            const posX = (width - widthStart) * 256;
+
+            const image = document.createElement("img");
+            image.src = "./tiles/" + imageName;
+            image.style.position = "absolute";
+            image.style.height = "256px";
+            image.style.width = "256px";
+            image.style.top = posY + "px";
+            image.style.left = posX + "px";
+
+            mapElement.appendChild(image);
+        }
+    }
+
+    let width = 2279;
+    let rainX = 64;
+    let rainY = 538-256;
+    
+    const rainImage = document.createElement("img");
+    rainImage.src = "https://grundid.de/data/weather/rainradar_20180517_195001.png";
+    rainImage.style.position = "absolute";
+    rainImage.style.height = width+"px";
+    rainImage.style.width = width+"px";
+    rainImage.style.top = rainY+"px";
+    rainImage.style.left = rainX+"px";
+    
+    mapElement.appendChild(rainImage);
+    
+    document.addEventListener("keydown", (event) => {
+        console.log(event);
+        if ((event.code === "KeyS")) {
+            rainY++;
+        } 
+        if ((event.code === "KeyW")) {
+            rainY--;
+        } 
+        if ((event.code === "KeyD")) {
+            rainX++;
+        } 
+        if ((event.code === "KeyA")) {
+            rainX--;
+        }
+        if (event.key === "-") {
+            width--;            
+        } 
+        if (event.key === "+") {
+            width++;            
+        } 
+        rainImage.style.top = rainY+"px";
+        rainImage.style.left = rainX+"px";
+        rainImage.style.height = width+"px";
+        rainImage.style.width = width+"px";
+
+        console.log("Y: " + rainY + "px X:" + rainX + "px Width: "+width);
+        
+    });
+
+
+</script>
+</body>
+</html>
